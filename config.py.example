@@ -1,0 +1,4 @@
+username = ""
+password = ""
+hostname = "0.0.0.0" // Change to switch core
+hostport = 0 // Change to ssh port
