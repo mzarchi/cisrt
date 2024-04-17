@@ -22,6 +22,6 @@ def showCdpNeighborsDetails(shell, port):
     shell.send(f"show cdp neighbors {port} detail\n")
     time.sleep(1)
     text = shell.recv(65535).decode("utf-8")
-    ip_pattern = r'\s*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
-    result['ip'] = re.findall(ip_pattern, text)
+    result['ip'] = re.findall(r'\s*(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', text)
+    result['text'] = text
     return result

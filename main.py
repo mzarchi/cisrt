@@ -1,3 +1,5 @@
+from colorama import Fore, Style
+
 import paramiko
 import config as cf
 import method as md
@@ -19,11 +21,11 @@ try:
         port_data = md.showMacAddressTable(shell, mac)
         port_details = md.showCdpNeighborsDetails(shell, port_data['port'][0])
         if "DYNAMIC" in port_data['text']:
-            print("switch-ip: {:<18s}- port-details: {:<10s}- Trunk".format(switch_ip, port_data['port'][0]))
+            print(f"switch-ip: {Fore.CYAN + Style.BRIGHT}{switch_ip:<18s}{Style.RESET_ALL}- port-details: {Fore.CYAN + Style.BRIGHT}{port_data['port'][0]:<10s}{Style.RESET_ALL}- Trunk")#.format(switch_ip, port_data['port'][0]))
             switch_ip = port_details['ip'][0]
         else:
-            print("switch-ip: {:<18s}- port-details: {:<10s}- Access".format(switch_ip, port_data['port'][0]))
-            print("client-ip: {:<18s}- Mac Address: {}".format(client_ip, mac))
+            print(f"switch-ip: {Fore.CYAN + Style.BRIGHT}{switch_ip:<18s}{Style.RESET_ALL}- port-details: {Fore.CYAN + Style.BRIGHT}{port_data['port'][0]:<10s}{Style.RESET_ALL}- {Fore.GREEN + Style.BRIGHT}Access{Style.RESET_ALL}")
+            print(f"client-ip: {Fore.GREEN + Style.BRIGHT}{client_ip:<18s}{Style.RESET_ALL}- mac-address: {Fore.GREEN + Style.BRIGHT}{mac}{Style.RESET_ALL}")
             break
         
 except Exception as e:
