@@ -1,34 +1,56 @@
 from colorama import Fore, Style
 
 import paramiko
+import SQLite as sq3
 import config as cf
 import method as md
 
-client_ip = input("Insert your client ip: ")
-try:
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    switch_ip = cf.switch_core
-    mac = None
-    
-    while True:
-        ssh.connect(switch_ip, cf.ssh_port, cf.username, cf.password)
+
+sq3.create()
+exit_opt = None
+while True:
+    if sq3.count_record()[0] > 0:
+        if cf.username is None:
+            config = sq3.search()[0]
+            cf.switch_core = config[1]
+            cf.username = config[2]
+            cf.password = config[3]
+            cf.ssh_port = config[4]
             
-        shell = ssh.invoke_shell()
-        if switch_ip == cf.switch_core:
-            mac = md.showArp(shell, client_ip)[0]
+        client_ip = input("Insert your client ip: ")
+        try:
+            ssh = paramiko.SSHClient()
+            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            switch_ip = cf.switch_core
+            mac = None
             
-        port_data = md.showMacAddressTable(shell, mac)
-        port_details = md.showCdpNeighborsDetails(shell, port_data['port'][0])
-        if "DYNAMIC" in port_data['text']:
-            print(f"switch-ip: {Fore.CYAN + Style.BRIGHT}{switch_ip:<18s}{Style.RESET_ALL}- port-details: {Fore.CYAN + Style.BRIGHT}{port_data['port'][0]:<10s}{Style.RESET_ALL}- Trunk")#.format(switch_ip, port_data['port'][0]))
-            switch_ip = port_details['ip'][0]
-        else:
-            print(f"switch-ip: {Fore.CYAN + Style.BRIGHT}{switch_ip:<18s}{Style.RESET_ALL}- port-details: {Fore.CYAN + Style.BRIGHT}{port_data['port'][0]:<10s}{Style.RESET_ALL}- {Fore.GREEN + Style.BRIGHT}Access{Style.RESET_ALL}")
-            print(f"client-ip: {Fore.GREEN + Style.BRIGHT}{client_ip:<18s}{Style.RESET_ALL}- mac-address: {Fore.GREEN + Style.BRIGHT}{mac}{Style.RESET_ALL}")
-            break
-        
-except Exception as e:
-    print(e)
+            while True:
+                ssh.connect(switch_ip, cf.ssh_port, cf.username, cf.password)
+                    
+                shell = ssh.invoke_shell()
+                if switch_ip == cf.switch_core:
+                    mac = md.showArp(shell, client_ip)[0]
+                    
+                port_data = md.showMacAddressTable(shell, mac)
+                port_details = md.showCdpNeighborsDetails(shell, port_data['port'][0])
+                if "DYNAMIC" in port_data['text']:
+                    print(f"switch-ip: {Fore.CYAN + Style.BRIGHT}{switch_ip:<18s}{Style.RESET_ALL}- port-details: {Fore.CYAN + Style.BRIGHT}{port_data['port'][0]:<10s}{Style.RESET_ALL}- Trunk")#.format(switch_ip, port_data['port'][0]))
+                    switch_ip = port_details['ip'][0]
+                else:
+                    print(f"switch-ip: {Fore.CYAN + Style.BRIGHT}{switch_ip:<18s}{Style.RESET_ALL}- port-details: {Fore.CYAN + Style.BRIGHT}{port_data['port'][0]:<10s}{Style.RESET_ALL}- {Fore.GREEN + Style.BRIGHT}Access{Style.RESET_ALL}")
+                    print(f"client-ip: {Fore.GREEN + Style.BRIGHT}{client_ip:<18s}{Style.RESET_ALL}- mac-address: {Fore.GREEN + Style.BRIGHT}{mac}{Style.RESET_ALL}")
+                    break
+                
+        except Exception as e:
+            print(e)
+            
+        exit_opt = input("For exit insert \"E\" or Enter for continue: ")
+    else:
+        gateway = input("Insert your gateway address: ")
+        username = input("Insert your username: ")
+        password = input("Insert your password: ")
+        port = input("Insert your ssh port: ")
+        sq3.insert(gateway, username, password, port)
     
-input("Please insert any key to exit ..")
+    if exit_opt == "E" or exit_opt == "e":
+        break
