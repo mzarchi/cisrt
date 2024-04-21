@@ -1,4 +1,5 @@
 from colorama import Fore, Style
+from getpass import getpass
 
 import paramiko
 import SQLite as sq3
@@ -9,7 +10,7 @@ import method as md
 print(r'''
    _____ _          _     
   / ____(_)        | |    developer: Mohammad Zarchi
- | |     _ ___ _ __| |_   version: Cisrt-v1.2
+ | |     _ ___ _ __| |_   version: Cisrt-v1.3
  | |    | / __| '__| __|  release data: 2024 Apr 21
  | |____| \__ \ |  | |_   github: mzarchi/cisrt
   \_____|_|___/_|   \__|  languege: python
@@ -57,7 +58,7 @@ while True:
     else:
         gateway = input("Insert your gateway address: ")
         username = input("Insert your username: ")
-        password = input("Insert your password: ")
+        password = getpass("Insert your password: ")
         port = input("Insert your ssh port: ")
         sq3.insert(gateway, username, password, port)
     
