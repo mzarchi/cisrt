@@ -9,11 +9,11 @@ import method as md
 
 print(r'''
    _____ _          _     
-  / ____(_)        | |    developer: Mohammad Zarchi
- | |     _ ___ _ __| |_   version: Cisrt-v1.3
- | |    | / __| '__| __|  release data: 2024 Apr 21
- | |____| \__ \ |  | |_   github: mzarchi/cisrt
-  \_____|_|___/_|   \__|  languege: python
+  / ____( )        | |    - developer: Mohammad Zarchi
+ | |     _ ___ _ __| |_   - version: Cisrt-v1.5
+ | |    | / __| '__| __|  - release data: 2024 Apr 21
+ | |____| \__ \ |  | |_   - github: mzarchi/cisrt
+  \_____|_|___/_|   \__|  - languege: python
 ''')
 
 sq3.create()
@@ -56,11 +56,11 @@ while True:
             
         exit_opt = input("For exit insert \"E\" or Enter for continue: ")
     else:
-        gateway = input("Insert your gateway address: ")
+        switch_core = input("Insert your switch-core ip: ")
         username = input("Insert your username: ")
         password = getpass("Insert your password: ")
         port = input("Insert your ssh port: ")
-        sq3.insert(gateway, username, password, port)
+        sq3.insert(switch_core, username, password, port)
     
     if exit_opt == "E" or exit_opt == "e":
         break
