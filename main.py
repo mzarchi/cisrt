@@ -9,8 +9,8 @@ import method as md
 print(r'''
    _____ _          _     
   / ____(_)        | |    developer: Mohammad Zarchi
- | |     _ ___ _ __| |_   version: Cisrt-v1.1
- | |    | / __| '__| __|  release data: 2024 Apr 4
+ | |     _ ___ _ __| |_   version: Cisrt-v1.2
+ | |    | / __| '__| __|  release data: 2024 Apr 21
  | |____| \__ \ |  | |_   github: mzarchi/cisrt
   \_____|_|___/_|   \__|  languege: python
 ''')
