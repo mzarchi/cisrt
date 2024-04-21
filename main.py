@@ -42,7 +42,7 @@ while True:
                     
                 port_data = md.showMacAddressTable(shell, mac)
                 port_details = md.showCdpNeighborsDetails(shell, port_data['port'][0])
-                if "DYNAMIC" in port_data['text']:
+                if "DYNAMIC" in port_data['text'] or "dynamic" in port_data['text']:
                     print(f"switch-ip: {Fore.CYAN + Style.BRIGHT}{switch_ip:<18s}{Style.RESET_ALL}- port-details: {Fore.CYAN + Style.BRIGHT}{port_data['port'][0]:<10s}{Style.RESET_ALL}- Trunk")#.format(switch_ip, port_data['port'][0]))
                     switch_ip = port_details['ip'][0]
                 else:
