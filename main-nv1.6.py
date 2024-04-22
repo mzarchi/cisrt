@@ -1,4 +1,3 @@
-from colorama import Fore, Style
 from getpass import getpass
 
 import paramiko
@@ -8,9 +7,9 @@ import method as md
 
 
 print(r'''
-   _____ _          _     
+   _____ _          _
   / ____( )        | |    - developer: Mohammad Zarchi
- | |     _ ___ _ __| |_   - version: Cisrt-v1.5
+ | |     _ ___ _ __| |_   - version: Cisrt-v1.6
  | |    | / __| '__| __|  - release data: 2024 Apr 21
  | |____| \__ \ |  | |_   - github: mzarchi/cisrt
   \_____|_|___/_|   \__|  - languege: python
@@ -44,11 +43,11 @@ while True:
                 port_data = md.showMacAddressTable(shell, mac)
                 port_details = md.showCdpNeighborsDetails(shell, port_data['port'][0])
                 if "DYNAMIC" in port_data['text'] or "dynamic" in port_data['text']:
-                    print(f"switch-ip: {Fore.CYAN + Style.BRIGHT}{switch_ip:<18s}{Style.RESET_ALL}- port-details: {Fore.CYAN + Style.BRIGHT}{port_data['port'][0]:<10s}{Style.RESET_ALL}- Trunk")#.format(switch_ip, port_data['port'][0]))
+                    print(f"switch-ip: {switch_ip:<18s}- port-details: {port_data['port'][0]:<10s}- Trunk")#.format(switch_ip, port_data['port'][0]))
                     switch_ip = port_details['ip'][0]
                 else:
-                    print(f"switch-ip: {Fore.CYAN + Style.BRIGHT}{switch_ip:<18s}{Style.RESET_ALL}- port-details: {Fore.CYAN + Style.BRIGHT}{port_data['port'][0]:<10s}{Style.RESET_ALL}- {Fore.GREEN + Style.BRIGHT}Access{Style.RESET_ALL}")
-                    print(f"client-ip: {Fore.GREEN + Style.BRIGHT}{client_ip:<18s}{Style.RESET_ALL}- mac-address: {Fore.GREEN + Style.BRIGHT}{mac}{Style.RESET_ALL}")
+                    print(f"switch-ip: {switch_ip:<18s}- port-details: {port_data['port'][0]:<10s}- Access")
+                    print(f"client-ip: {client_ip:<18s}- mac-address: {mac}")
                     break
                 
         except Exception as e:
